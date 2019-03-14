@@ -3,19 +3,59 @@
 */
 @import url('https://fonts.googleapis.com/css?family=Lato:200,300,400');
 
-
 body {
     font-family: Lato;
-    font-weight: 200;
-    background: #fafafa;
+    background: white;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
 }
+.container.landing-page {
+    position: relative;
+    /*padding: 15px;*/
+    text-align: center;
+}
+.SearchBoxInput {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: transparent;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: #3b3b3b;
+    font-size: 16px;
+    font-weight: bold;
+    height: 100%;
+    line-height: 20px;
+    outline: none;
+    padding: 20px;
+    width: 100%;
+}
+.searchIcon {
+    height: 20px;
+    width:20px;
+    fill: #3b3b3b;
+    margin-right: 15px;
+}
+.searchBar {
+    height:40px;
+    width:70%;
+    align-items:center;
+    background-color: #dcdcdc;
+    display: flex;
+    border-radius: 4px;
+    margin: auto;
+}
+
 a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #dddddd;
+    color: #3b3b3b;
+    font-weight: bold;
     opacity: 1; /* Firefox */
 }
 .navbar {
@@ -23,8 +63,7 @@ a, a:hover, a:focus {
     background: #fff;
     border: none;
     border-radius: 0;
-    margin-bottom: 40px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);*/
 }
 
 .navbar-btn {
@@ -48,23 +87,8 @@ a, a:hover, a:focus {
   display: inline-block;
   margin-left: 0.75rem;
 }
-.guideline {
-    padding: 20px;
-    padding-top: 5px;
-    font-family: Lato;
-    font-weight: 200;
-    color: #999;
-}
-.continue{
-    border-radius: 10px;
-    background-color: #999;
-    color: white;
-    border: none;
-    float: right;
-    margin: 30px;
-    font-size: 16px;
-    padding:10px;
-}
+
+
 .myFooter {
     bottom: 40px; 
 }
@@ -73,93 +97,22 @@ a, a:hover, a:focus {
     float: left;
     font-size: 16px;
 }
-.personal {
-    padding: 5px;
-    border-radius: 4px;
-    margin: 10px;
-    font-family: Lato;
-    font-weight: 200;
-    border: 1px dotted #999;
-    width: 200px;
-}
-.fun_fact {
-    padding: 5px;
-    border-radius: 4px;
-    margin: 10px;
-    font-family: Lato;
-    font-weight: 200;
-    border: 1px dotted #999;
-    width: 600px;
-}
-.save_exit  {
-    margin: 15px;
-    padding:10px;
-    float: right;
-    height: 40px;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-family: Lato;
-    background-color: #999;
-}
-.save_continue  {
-    margin: 15px;
-    padding:10px;
-    float: right;
-    height: 40px;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-family: Lato;
-    background-color: #999;
-}
-#biography {
-    width: 90%;
-    height: 150px;
-    border-radius: 5px;
-    border-color: #bbb;
-    padding: 10px;
-    margin: 10px;
-    font-size: 16px;
-}
-.explanation {
-    font-size: 16px;
-    padding: 10px;
-    margin: 20px;
-}
-.checkmark {
-    width:20px;
-    float: right;
-    margin-right: 20px
-}
-#logout {
-    margin-bottom: 65px;
-    margin-right: 100px;
-    float: right;
-    padding:10px;
-    height: 40px;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-family: Lato;
-    background-color: #999;
-}
+
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
 #sidebar {
-    width: 250px;
+    width: 300px;
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: #3e3e3e;
-    color: #fff;
+    background: #fff;
+    color: #3e3e3e;
     transition: all 0.3s;
+    box-shadow: 1px 0 4px rgba(0, 0, 0, 0.1);
 }
 
 #sidebar.active {
@@ -168,15 +121,16 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #5e5e5e;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    color: #EE2E24;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    padding: 20px 20px;
 }
 
 #sidebar ul p {
-    color: #fff;
     padding: 10px;
     font-size: 20px;
 }
@@ -186,16 +140,11 @@ a, a:hover, a:focus {
     font-size: 1.1em;
     display: block;
 }
+
 #sidebar ul li a:hover {
-    color: #5e5e5e;
+    color: #a2a2a2;
     background: #fff;
 }
-
-#sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
-    background: #5e5e5e;
-}
-
 
 a[data-toggle="collapse"] {
     position: relative;
@@ -257,6 +206,7 @@ input:focus {
     position: absolute;
     top: 0;
     right: 0;
+    background: white;
 }
 #content.active {
     width: 100%;
