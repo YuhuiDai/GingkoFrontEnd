@@ -63,7 +63,6 @@ a, a:hover, a:focus {
     background: #fff;
     border: none;
     border-radius: 0;
-    /*box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);*/
 }
 
 .navbar-btn {
@@ -89,8 +88,9 @@ a, a:hover, a:focus {
 }
 
 
-.myFooter {
-    bottom: 40px; 
+.explanation {
+    text-align: center;
+    color: #ffffff;
 }
 .sub{
     margin: 15px;

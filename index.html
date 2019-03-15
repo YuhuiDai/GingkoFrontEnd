@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" type="image/x-icon" href="public/resources/d.png">
     <title>Index</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
     <script data-require="jquery@*" data-semver="2.0.3" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -17,7 +16,6 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-    <script data-require="jqFhir@0.0.5" data-semver="0.0.5" src="https://cdn.rawgit.com/FHIR/fhir.js/v0.0.5/dist/jqFhir.js"></script>
 
 </head>
 <body>
@@ -29,12 +27,12 @@
         </div>
 
         <ul class="list-unstyled components">
-            <p>Scores</p >
+            <p>Sub Scores</p >
 
             <li>
                 <a>
-                    <div class="pretty p-default">
-                        <input type="checkbox" />
+                    <div class="pretty p-default" onclick="display()">
+                        <input id='Spelling' type="checkbox" checked />
                         <div class="state p-danger">
                             <label>Spelling</label>
                         </div>
@@ -44,8 +42,8 @@
 
             <li>
                 <a>
-                    <div class="pretty p-default">
-                        <input type="checkbox" />
+                    <div class="pretty p-default" onclick="display()">
+                        <input id='Grammar' type="checkbox" />
                         <div class="state p-danger">
                             <label>Grammar</label>
                         </div>
@@ -55,8 +53,8 @@
 
             <li>
                 <a>
-                    <div class="pretty p-default">
-                        <input type="checkbox" />
+                    <div class="pretty p-default" onclick="display()">
+                        <input id='Reading Level' type="checkbox" checked/>
                         <div class="state p-danger">
                             <label>Reading Level</label>
                         </div>
@@ -66,8 +64,8 @@
 
             <li>
                 <a>
-                    <div class="pretty p-default">
-                        <input type="checkbox" />
+                    <div class="pretty p-default" onclick="display()">
+                        <input id='Number of Ads' type="checkbox" />
                         <div class="state p-danger">
                             <label>Number of Ads</label>
                         </div>
@@ -77,8 +75,8 @@
 
             <li>
                 <a>
-                    <div class="pretty p-default">
-                        <input type="checkbox" />
+                    <div class="pretty p-default" onclick="display()">
+                        <input id='Number of Images' type="checkbox" />
                         <div class="state p-danger">
                             <label>Number of Images</label>
                         </div>
@@ -88,8 +86,8 @@
 
             <li>
                 <a>
-                    <div class="pretty p-default">
-                        <input type="checkbox" />
+                    <div class="pretty p-default" onclick="display()">
+                        <input id='Social Network Links' type="checkbox" checked/>
                         <div class="state p-danger">
                             <label>Social Network Links</label>
                         </div>
@@ -99,8 +97,8 @@
 
             <li>
                 <a>
-                    <div class="pretty p-default">
-                        <input type="checkbox" />
+                    <div class="pretty p-default" onclick="display()">
+                        <input id='Cross-site Citations' type="checkbox" checked />
                         <div class="state p-danger">
                             <label>Cross-site Citations</label>
                         </div>
@@ -110,8 +108,8 @@
 
             <li>
                 <a>
-                    <div class="pretty p-default">
-                        <input type="checkbox" />
+                    <div class="pretty p-default" onclick="display()">
+                        <input id='Sentiment' type="checkbox"/>
                         <div class="state p-danger">
                             <label>Sentiment</label>
                         </div>
@@ -146,7 +144,7 @@
                 <div class="container landing-page">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2 style="margin-bottom: 30px">Data</h2>
+                            <h2 style="margin-bottom: 30px">Credibility Score</h2>
                         </div>
                     </div>
 
@@ -161,9 +159,6 @@
 
         </div>
 
-        <footer>
-            <p class="myRightFooter" style="position: absolute; right: 50px; bottom: 40px">© 2018 Sun Ran & Yuhui Dai</p>
-        </footer>
     </div>
 
 </div>
@@ -174,25 +169,40 @@
 <!-- jQuery Custom Scroller CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <script>
-    // Set up a client to talk to an un-authenticated FHIR server
-    display();
+
+
+
+    let fullSet = [
+        {"id":"Spelling","score":3,"weight": 34, "c":"#2278eb"},
+        {"id":"Grammar","score":5,"weight": 34, "c":"#0092ff"},
+        {"id":"Reading Level","score":5,"weight": 34, "c":"#00a9ff"},
+        {"id":"Number of Ads","score":6,"weight": 34, "c":"#00beff"},
+        {"id":"Social Network Links","score":5,"weight": 34, "c":"#00d1f8"},
+        {"id":"Number of Images","score":1,"weight": 34, "c":"#00e2e1"},
+        {"id":"Cross-site Citations","score":5,"weight": 34, "c":"#00f2c4"},
+        {"id":"Sentiment","score":2,"weight": 34, "c":"#00ffa6"}
+    ];
+    window.onload = display();
 
 
 
     function display() {
+        $("#pie2").children().remove();
+        let data = [];
 
-        let data = [
-            {"age":"< 18","num":3, "c":"rgba(72,112,255,0.7)"},
-            {"age":"18 to 30","num":5, "c":"rgba(0,166,214,0.7)"},
-            {"age":"31 to 40","num":5, "c":"rgba(0,110,199,0.7)"},
-            {"age":"41 to 50","num":6, "c":"rgba(0,76,151,0.7)"},
-            {"age":"51 to 65","num":5, "c":"rgba(0,43,100,0.7)"},
-            {"age":"65 +","num":0, "5":"rgba(170,170,170,0.7)"}
-        ];
-
+        for (const item of fullSet) {
+            console.log(document.getElementById(item.id).checked);
+            // if ($(item.id).prop('checked')) {
+            //     data.push(item);
+            // }
+            if (document.getElementById(item.id).checked) {
+                data.push(item);
+            }
+        }
+        console.log(data);
         let sum = 0;
         for (const d of data) {
-            sum += d.num;
+            sum += d.score;
         }
 
         width = 300;
@@ -216,7 +226,7 @@
             .sort(null)
             .startAngle(1.0*Math.PI)
             .endAngle(3.0*Math.PI)
-            .value(function(d){return d.num;});
+            .value(function(d){return d.score;});
 
 
         let g = svg.selectAll(".arc")
@@ -227,10 +237,12 @@
             .on("mousemove",function(d){
                 var mouseVal = d3.mouse(this);
                 div.style("display","none");
-                div.html(d.data.age+"</br>"+((d.data.num/sum)*100).toFixed(1)+"%")
+                div.html("<div class='explanation'>"+d.data.id+"</br>"+ "score: " + d.data.score+"</br>"+"weight: "+((d.data.score/sum)*100).toFixed(1)+"%</div>")
                     .style("left", (d3.event.pageX+12) + "px")
                     .style("top", (d3.event.pageY-10) + "px")
                     .style("opacity", 1)
+                    .style("font-family", 'Lato')
+                    .style('font-size', "20px")
                     .style("display","block");
             })
             .on("mouseout",function(){div.html(" ").style("display","none");});
