@@ -9,6 +9,7 @@
     <script data-require="jquery@*" data-semver="2.0.3" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- pretty checkbox CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
@@ -144,7 +145,8 @@
                 <div class="container landing-page">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2 style="margin-bottom: 30px">Credibility Score</h2>
+                            <h2 >Credibility Score </h2>
+                            <h1 style="margin-bottom: 30px; font-weight: bold; color: #feb700;" id="credibility score"></h1>
                         </div>
                     </div>
 
@@ -173,14 +175,14 @@
 
 
     let fullSet = [
-        {"id":"Spelling","score":3,"weight": 34, "c":"#2278eb"},
-        {"id":"Grammar","score":5,"weight": 34, "c":"#0092ff"},
-        {"id":"Reading Level","score":5,"weight": 34, "c":"#00a9ff"},
-        {"id":"Number of Ads","score":6,"weight": 34, "c":"#00beff"},
-        {"id":"Social Network Links","score":5,"weight": 34, "c":"#00d1f8"},
-        {"id":"Number of Images","score":1,"weight": 34, "c":"#00e2e1"},
-        {"id":"Cross-site Citations","score":5,"weight": 34, "c":"#00f2c4"},
-        {"id":"Sentiment","score":2,"weight": 34, "c":"#00ffa6"}
+        {"id":"Spelling","score":35,"weight": 34, "c":"#2278eb"},
+        {"id":"Grammar","score":53,"weight": 34, "c":"#0092ff"},
+        {"id":"Reading Level","score":51,"weight": 34, "c":"#00a9ff"},
+        {"id":"Number of Ads","score":60,"weight": 34, "c":"#00beff"},
+        {"id":"Social Network Links","score":59,"weight": 34, "c":"#00d1f8"},
+        {"id":"Number of Images","score":41,"weight": 34, "c":"#00e2e1"},
+        {"id":"Cross-site Citations","score":59,"weight": 34, "c":"#00f2c4"},
+        {"id":"Sentiment","score":52,"weight": 34, "c":"#00ffa6"}
     ];
     window.onload = display();
 
@@ -188,22 +190,21 @@
 
     function display() {
         $("#pie2").children().remove();
+
         let data = [];
 
         for (const item of fullSet) {
-            console.log(document.getElementById(item.id).checked);
-            // if ($(item.id).prop('checked')) {
-            //     data.push(item);
-            // }
             if (document.getElementById(item.id).checked) {
                 data.push(item);
             }
         }
-        console.log(data);
+
         let sum = 0;
         for (const d of data) {
             sum += d.score;
         }
+
+        document.getElementById("credibility score").innerHTML = (sum/data.length).toFixed(0);
 
         width = 300;
         height = 300;
@@ -237,7 +238,7 @@
             .on("mousemove",function(d){
                 var mouseVal = d3.mouse(this);
                 div.style("display","none");
-                div.html("<div class='explanation'>"+d.data.id+"</br>"+ "score: " + d.data.score+"</br>"+"weight: "+((d.data.score/sum)*100).toFixed(1)+"%</div>")
+                div.html("<div class='explanation'>"+d.data.id+"</br>"+ "score: " + d.data.score+"</br>"+"weight: "+((1/data.length)*100).toFixed(1)+"%</div>")
                     .style("left", (d3.event.pageX+12) + "px")
                     .style("top", (d3.event.pageY-10) + "px")
                     .style("opacity", 1)
@@ -263,6 +264,7 @@
                 }})
             .attr("d",arc)
             .style("fill",function(d){return d.data.c;});
+
     }
 
 </script>

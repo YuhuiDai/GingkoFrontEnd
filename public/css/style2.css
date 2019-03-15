@@ -90,13 +90,23 @@ a, a:hover, a:focus {
 
 .explanation {
     text-align: center;
-    color: #ffffff;
+    /*color: #ffffff;*/
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(248, 236, 226, 0.9);
+    color: #4b2c0d;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(214,214,214, 0.8);
 }
-.sub{
-    margin: 15px;
-    float: left;
-    font-size: 16px;
+
+#keyscale {
+    width: 50vw;
+    position: absolute;
+    left: 40px;
+    bottom: 100px;
 }
+
 
 
 /* ---------------------------------------------------
