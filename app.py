@@ -11,15 +11,18 @@ def index():
 # on the home page, when put into search bar
 @app.route("/search", methods=['GET','POST'])
 def search():
-    """API that takes in searching a specific url
+    """API that takes in a specific url and assess its credibility
+    Parameter: Url
     Returns:
-        json object of credibility score and its breakdown
+        json object of credibility score and its breakdowns
     """
-    # searchTerm = request.args.get('search')
+    searchUrl = request.args.get('websiteAddress')
+    print(searchUrl)
     # # data = get_score(searchTerm, resources)
     # resources = ["BLOOMBERG", "CNN"]
     # data = get_score_multi(searchTerm, resources, '30')
     # return render_template('index.html', data = data, level = 0)
+    return "0"
 
 
 if __name__ == '__main__':
