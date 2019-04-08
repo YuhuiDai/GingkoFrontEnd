@@ -19,7 +19,7 @@ def search():
     # # data = get_score(searchTerm, resources)
     # resources = ["BLOOMBERG", "CNN"]
     # data = get_score_multi(searchTerm, resources, '30')
-    # return render_template('articles.html', data = data, level = 0)
+    # return render_template('index.html', data = data, level = 0)
 
 
 if __name__ == '__main__':
