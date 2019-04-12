@@ -14,52 +14,22 @@
 <body>
     <section class="main">
         <div class="container landing-page">
-        <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <h1 style="margin-bottom: 40px; margin-top: 200px">Gingko</h1>
-        </div>
-      </div>
-      <div class="searchBar">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div style=" margin-top: 250px; margin-bottom: 50px; font-size: 100px; font-weight: bold; color: #cc0000ff">Gingko</div>
+                </div>
+            </div>
 
-        <div style="width:100%;height:100%;">
-          <input type="text" autocomplete="off" aria-autocomplete="false" aria-describedby="searchBoxAccessibleText" class="SearchBoxInput" data-test-id="SearchBoxInput" id="searchBar" value="">
-        </div>
-        <div>
-          <a type="submit" onclick="return searchCredibility()" id="submit_button">
-            <svg class="searchIcon" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img">
-              <path d="M10.00,16.00 C6.69,16.00 4.00,13.31 4.00,10.00 C4.00,6.69 6.69,4.00 10.00,4.00 C13.31,4.00 16.00,6.69 16.00,10.00 C16.00,13.31 13.31,16.00 10.00,16.00 M23.12,18.88 L18.86,14.62 C19.59,13.24 20.00,11.67 20.00,10.00 C20.00,4.48 15.52,0.00 10.00,0.00 C4.48,0.00 0.00,4.48 0.00,10.00 C0.00,15.52 4.48,20.00 10.00,20.00 C11.67,20.00 13.24,19.59 14.62,18.86 L18.88,23.12 C20.05,24.29 21.95,24.29 23.12,23.12 C24.29,21.95 24.29,20.05 23.12,18.88" data-reactid="43"></path>
-            </svg>
-          </a>
-
-        </div>
+            <form action="/search" class="searchBar" style="text-align: center" method='get'>
+                <input type="text" name="websiteAddress" aria-describedby="searchBoxAccessibleText" class="SearchBoxInput" data-test-id="SearchBoxInput" id="searchBar" value="">
+                <svg class="searchIcon" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img">
+                    <path d="M10.00,16.00 C6.69,16.00 4.00,13.31 4.00,10.00 C4.00,6.69 6.69,4.00 10.00,4.00 C13.31,4.00 16.00,6.69 16.00,10.00 C16.00,13.31 13.31,16.00 10.00,16.00 M23.12,18.88 L18.86,14.62 C19.59,13.24 20.00,11.67 20.00,10.00 C20.00,4.48 15.52,0.00 10.00,0.00 C4.48,0.00 0.00,4.48 0.00,10.00 C0.00,15.52 4.48,20.00 10.00,20.00 C11.67,20.00 13.24,19.59 14.62,18.86 L18.88,23.12 C20.05,24.29 21.95,24.29 23.12,23.12 C24.29,21.95 24.29,20.05 23.12,18.88" data-reactid="43"></path>
+                </svg>
+            </form>
       </div>
 
-      </div>
+
   </section>
 </body>
 
-<script>
-    function searchCredibility(){
-      $.ajax(
-            {
-              type : 'GET',
-              url : "/search",
-              data: {'websiteAddress': $('#searchBar').val()},
-              success : function(data){
-                console.log(data);
-                // DYNAMICALLY ADD HTML CONTENT TO RENDER BROKEN DOWN PIECES AND THEIR RESPECTIVE AUDIO FILES
-                // $( "#article" ).html(data.article);
-                // let chunks = data.chunks;
-                // let audioList = data.audioList;
-                // for (i = 0; i < chunks.length; i++) {
-                //   let chunk = chunks[i];
-                //   let audio = audioList[i+1]; // skip the invisible file .DS_store
-                //   let template = createContent(chunk, audio);
-                //   $('#result').append(template);
-                // }
-              }/*success : function() {}*/
-            });/*$.ajax*/
-    }
-
-</script>
 </html>

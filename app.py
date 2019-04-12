@@ -18,11 +18,11 @@ def search():
     """
     searchUrl = request.args.get('websiteAddress')
     print(searchUrl)
-    # # data = get_score(searchTerm, resources)
-    # resources = ["BLOOMBERG", "CNN"]
-    # data = get_score_multi(searchTerm, resources, '30')
-    # return render_template('search.html', data = data, level = 0)
-    return "0"
+
+    # data = get_json(searchTerm, resources, '30')
+    data = searchUrl
+    return render_template('search.html', data = data)
+
 
 
 if __name__ == '__main__':
