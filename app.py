@@ -20,9 +20,12 @@ def search():
     print(searchUrl)
 
     # data = get_json(searchTerm, resources, '30')
-    data = searchUrl
+    data = []
+    if len(data) == 0:
+        return render_template('search.html', error = "Please enter a valid website")
+
     credibility = 70
-    return render_template('search.html', data = data, credibility= credibility)
+    return render_template('search.html', data = searchUrl, credibility= credibility)
 
 
 
