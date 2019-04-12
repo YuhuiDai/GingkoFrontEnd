@@ -44,7 +44,7 @@
       <li>
         <a>
           <div class="pretty p-default" onclick="display()">
-            <input id='Number of Ads' type="checkbox" />
+            <input id='Number of Ads' type="checkbox" checked/>
             <div class="state p-danger">
               <label>Number of Ads</label>
             </div>
@@ -88,7 +88,7 @@
       <li>
         <a>
           <div class="pretty p-default" onclick="display()">
-            <input id='Sentiment' type="checkbox"/>
+            <input id='Sentiment' type="checkbox" checked/>
             <div class="state p-danger">
               <label>Sentiment</label>
             </div>
@@ -181,38 +181,49 @@
     {"id":"Cross-site Citations","score":59},
     {"id":"Sentiment","score":52}
   ];
+
   window.onload = display();
-  window.onload = barchart();
 
-  function barchart() {
 
-    // $("#bar1").children().remove();
+
+  function display() {
+
+
+    $("#bar1").children().remove();
+
+    let data = [];
+
+    for (const item of fullSet) {
+      if (document.getElementById(item.id).checked) {
+        data.push(item);
+      }
+    }
+    const barheight = 60;
     let width = 800;
-    let height = 400;
+    let height = data.length * barheight;
     margin = {top: 0, right: 20, bottom: 30, left: 80};
     let svg = d3.select("#bar1").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-    // let svg = d3.select("#bar1").append("svg"),
-
-
   
     let tooltip = d3.select("body").append("div").attr("class", "tooltip");
-  
     let x = d3.scaleLinear().range([0, width]);
     let y = d3.scaleBand().range([height, 0]);
-
-    // SCALES
-
     let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   
     // d3.json(fullSet, function(error, data) {
   	//     if (error) throw error;
-    let data = fullSet;
+
+
+    let sum = 0;
+    for (const d of data) {
+      sum += d.score;
+    }
+
+    document.getElementById("credibility score").innerHTML = (sum/data.length).toFixed(0);
+
     data.sort(function(a, b) { return a.score - b.score; });
     x.domain([0, d3.max(data, function(d) { return d.score; })]);
     y.domain(data.map(function(d) { return d.id; })).padding(0.3);
@@ -220,7 +231,6 @@
 
     // DATA BIND
     let key = g.selectAll('text.key').data(data);
-
     key.enter()
             .append("text")
             .attr("class","key")
@@ -228,7 +238,8 @@
             .attr("y", function(d,i) {return y(d.id) })
             .attr('dy',30).attr("text-anchor", "end")
             .style('font-family', 'Lato')
-            .style('font-size', "14px")
+            .style('font-weight', 'bold')
+            .style('font-size', "15px")
             .text(function(d) { return d.id });
 
 
@@ -248,33 +259,14 @@
                                    .style("top", (d3.event.pageY-10) + "px")
                                    .style("opacity", 1)
                                    .style("font-family", 'Lato')
-                                   .style('font-size', "14px")
-                                   .html("<div class='explanation'>"+d.id+"</br>"+ "score: " + d.score+ "</div>");
+                                   .style('font-size', "15px")
+                                   .style("display", "inline-block")
+                                   .html("<div class='explanation'>score: " + d.score+ "</div>");
                  })
-                .on("mouseout",function(){div.html(" ").style("display","none");});
+                .on("mouseout",function(){tooltip.style("display","none");});
     // });
   }
 
-  function display() {
-    $("#pie2").children().remove();
-
-    let data = [];
-
-    for (const item of fullSet) {
-      if (document.getElementById(item.id).checked) {
-        data.push(item);
-      }
-    }
-
-    let sum = 0;
-    for (const d of data) {
-      sum += d.score;
-    }
-
-    document.getElementById("credibility score").innerHTML = (sum/data.length).toFixed(0);
-
-
-  }
 
 </script>
 <script type="text/javascript">

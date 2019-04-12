@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('home.html')
 
 # on the home page, when put into search bar
 @app.route("/search", methods=['GET','POST'])
@@ -21,7 +21,7 @@ def search():
     # # data = get_score(searchTerm, resources)
     # resources = ["BLOOMBERG", "CNN"]
     # data = get_score_multi(searchTerm, resources, '30')
-    # return render_template('index.html', data = data, level = 0)
+    # return render_template('search.html', data = data, level = 0)
     return "0"
 
 
