@@ -102,29 +102,19 @@
   <div id="content">
 
     <nav class="navbar navbar-default">
-      <!--<div class="container-fluid">-->
-      <div class="searchBar">
-
-        <div style="width:100%;height:100%;">
-          <input type="text" autocomplete="off" aria-autocomplete="false" aria-describedby="searchBoxAccessibleText" class="SearchBoxInput" data-test-id="SearchBoxInput" id="searchBar" placeholder="www.fakenews.com" value="">
-        </div>
-        <div>
-          <a type="submit" onclick="return searchCredibility()" id="submit_button">
-            <svg class="searchIcon" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img">
-              <path d="M10.00,16.00 C6.69,16.00 4.00,13.31 4.00,10.00 C4.00,6.69 6.69,4.00 10.00,4.00 C13.31,4.00 16.00,6.69 16.00,10.00 C16.00,13.31 13.31,16.00 10.00,16.00 M23.12,18.88 L18.86,14.62 C19.59,13.24 20.00,11.67 20.00,10.00 C20.00,4.48 15.52,0.00 10.00,0.00 C4.48,0.00 0.00,4.48 0.00,10.00 C0.00,15.52 4.48,20.00 10.00,20.00 C11.67,20.00 13.24,19.59 14.62,18.86 L18.88,23.12 C20.05,24.29 21.95,24.29 23.12,23.12 C24.29,21.95 24.29,20.05 23.12,18.88" data-reactid="43"></path>
-            </svg>
-          </a>
-
-        </div>
-      </div>
-      <!--</div>-->
+      <form action="/search" class="searchBar" style="text-align: center" method='get'>
+        <input type="text" name="websiteAddress" aria-describedby="searchBoxAccessibleText" class="SearchBoxInput" data-test-id="SearchBoxInput" id="searchBar" value="">
+        <svg class="searchIcon" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img">
+          <path d="M10.00,16.00 C6.69,16.00 4.00,13.31 4.00,10.00 C4.00,6.69 6.69,4.00 10.00,4.00 C13.31,4.00 16.00,6.69 16.00,10.00 C16.00,13.31 13.31,16.00 10.00,16.00 M23.12,18.88 L18.86,14.62 C19.59,13.24 20.00,11.67 20.00,10.00 C20.00,4.48 15.52,0.00 10.00,0.00 C4.48,0.00 0.00,4.48 0.00,10.00 C0.00,15.52 4.48,20.00 10.00,20.00 C11.67,20.00 13.24,19.59 14.62,18.86 L18.88,23.12 C20.05,24.29 21.95,24.29 23.12,23.12 C24.29,21.95 24.29,20.05 23.12,18.88" data-reactid="43"></path>
+        </svg>
+      </form>
     </nav>
     <div class="main">
       <div class="container landing-page">
         <div class="row">
           <div class="col-lg-12">
             <h2 >Credibility Score </h2>
-            <h1 style="margin-bottom: 30px; font-weight: bold; color: #feb700;" id="credibility score"></h1>
+            <h1 style="margin-bottom: 30px; font-weight: bold; color: #feb700;" id="credibility score">{{credibility}}</h1>
           </div>
         </div>
 
@@ -206,13 +196,6 @@
     // d3.json(fullSet, function(error, data) {
   	//     if (error) throw error;
 
-
-    let sum = 0;
-    for (const d of data) {
-      sum += d.score;
-    }
-
-    document.getElementById("credibility score").innerHTML = (sum/data.length).toFixed(0);
 
     data.sort(function(a, b) { return a.score - b.score; });
     x.domain([0, d3.max(data, function(d) { return d.score; })]);

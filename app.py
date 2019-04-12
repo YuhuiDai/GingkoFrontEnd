@@ -21,7 +21,8 @@ def search():
 
     # data = get_json(searchTerm, resources, '30')
     data = searchUrl
-    return render_template('search.html', data = data)
+    credibility = 70
+    return render_template('search.html', data = data, credibility= credibility)
 
 
 
