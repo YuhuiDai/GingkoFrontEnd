@@ -33,28 +33,6 @@
       <li>
         <a>
           <div class="pretty p-default" onclick="display()">
-            <input id='Spelling' type="checkbox" checked />
-            <div class="state p-danger">
-              <label>Spelling</label>
-            </div>
-          </div>
-        </a >
-      </li>
-
-      <li>
-        <a>
-          <div class="pretty p-default" onclick="display()">
-            <input id='Grammar' type="checkbox" />
-            <div class="state p-danger">
-              <label>Grammar</label>
-            </div>
-          </div>
-        </a >
-      </li>
-
-      <li>
-        <a>
-          <div class="pretty p-default" onclick="display()">
             <input id='Reading Level' type="checkbox" checked/>
             <div class="state p-danger">
               <label>Reading Level</label>
@@ -153,6 +131,7 @@
         <div class="row">
 
           <div class="col-lg-12" id="age_pie">
+            <div id="bar1" style="margin: auto;"></div>
             <div id="pie2" style="margin: auto;"></div>
           </div>
 
@@ -182,12 +161,12 @@
                 console.log(data);
                 // DYNAMICALLY ADD HTML CONTENT TO RENDER BROKEN DOWN PIECES AND THEIR RESPECTIVE AUDIO FILES
                 // $( "#article" ).html(data.article);
-                // var chunks = data.chunks;
-                // var audioList = data.audioList;
+                // let chunks = data.chunks;
+                // let audioList = data.audioList;
                 // for (i = 0; i < chunks.length; i++) {
-                //   var chunk = chunks[i];
-                //   var audio = audioList[i+1]; // skip the invisible file .DS_store
-                //   var template = createContent(chunk, audio);
+                //   let chunk = chunks[i];
+                //   let audio = audioList[i+1]; // skip the invisible file .DS_store
+                //   let template = createContent(chunk, audio);
                 //   $('#result').append(template);
                 // }
               }/*success : function() {}*/
@@ -195,18 +174,86 @@
     }
 
   let fullSet = [
-    {"id":"Spelling","score":35,"weight": 34, "c":"#2278eb"},
-    {"id":"Grammar","score":53,"weight": 34, "c":"#0092ff"},
-    {"id":"Reading Level","score":51,"weight": 34, "c":"#00a9ff"},
-    {"id":"Number of Ads","score":60,"weight": 34, "c":"#00beff"},
-    {"id":"Social Network Links","score":59,"weight": 34, "c":"#00d1f8"},
-    {"id":"Number of Images","score":41,"weight": 34, "c":"#00e2e1"},
-    {"id":"Cross-site Citations","score":59,"weight": 34, "c":"#00f2c4"},
-    {"id":"Sentiment","score":52,"weight": 34, "c":"#00ffa6"}
+    {"id":"Reading Level","score":51},
+    {"id":"Number of Ads","score":60},
+    {"id":"Social Network Links","score":59},
+    {"id":"Number of Images","score":41},
+    {"id":"Cross-site Citations","score":59},
+    {"id":"Sentiment","score":52}
   ];
   window.onload = display();
+  window.onload = barchart();
+
+  function barchart() {
+
+    // $("#bar1").children().remove();
+    let width = 800;
+    let height = 400;
+    margin = {top: 0, right: 20, bottom: 30, left: 80};
+    let svg = d3.select("#bar1").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
+    // let svg = d3.select("#bar1").append("svg"),
+
+
+  
+    let tooltip = d3.select("body").append("div").attr("class", "tooltip");
+  
+    let x = d3.scaleLinear().range([0, width]);
+    let y = d3.scaleBand().range([height, 0]);
+
+    // SCALES
+
+    let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  
+    // d3.json(fullSet, function(error, data) {
+  	//     if (error) throw error;
+    let data = fullSet;
+    data.sort(function(a, b) { return a.score - b.score; });
+    x.domain([0, d3.max(data, function(d) { return d.score; })]);
+    y.domain(data.map(function(d) { return d.id; })).padding(0.3);
+    let colorScale2 = d3.scaleLinear().domain([0, data.length-1]).range(['lightblue','lightgreen']);
+
+    // DATA BIND
+    let key = g.selectAll('text.key').data(data);
+
+    key.enter()
+            .append("text")
+            .attr("class","key")
+            .attr("x", -30)
+            .attr("y", function(d,i) {return y(d.id) })
+            .attr('dy',30).attr("text-anchor", "end")
+            .style('font-family', 'Lato')
+            .style('font-size', "14px")
+            .text(function(d) { return d.id });
+
+
+        g.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .style("fill", function (d, i) {return colorScale2(i);})
+                .attr("x", 0)
+                .attr("height", y.bandwidth())
+                .attr("y", function(d) { return y(d.id); })
+                .attr("width", function(d) { return x(d.score); })
+                 .on("mousemove", function(d){
+                   console.log(d3.event.pageX);
+                           tooltip
+                                   .style("left", (d3.event.pageX+12) + "px")
+                                   .style("top", (d3.event.pageY-10) + "px")
+                                   .style("opacity", 1)
+                                   .style("font-family", 'Lato')
+                                   .style('font-size', "14px")
+                                   .html("<div class='explanation'>"+d.id+"</br>"+ "score: " + d.score+ "</div>");
+                 })
+                .on("mouseout",function(){div.html(" ").style("display","none");});
+    // });
+  }
 
   function display() {
     $("#pie2").children().remove();
@@ -226,64 +273,6 @@
 
     document.getElementById("credibility score").innerHTML = (sum/data.length).toFixed(0);
 
-    width = 300;
-    height = 300;
-    radius = Math.min(width-100,height-100)/2;
-
-    let arc = d3.arc().outerRadius(60).innerRadius(0);
-
-    let a= width/2 - 20;
-    let b= height/2 - 90;
-    let svg = d3.select("#pie2").append("svg")
-            .attr("viewBox", "0 0 " + (width-50) + " " + height/2)
-            .attr("preserveAspectRatio", "xMidYMid meet")
-            .append("g")
-            .attr("transform","translate("+a+","+b+")");
-
-
-    div = d3.select("body").append("div").attr("class", "tooltip");
-
-    let pie = d3.pie()
-            .sort(null)
-            .startAngle(1.0*Math.PI)
-            .endAngle(3.0*Math.PI)
-            .value(function(d){return d.score;});
-
-
-    let g = svg.selectAll(".arc")
-            .data(pie(data))
-            .enter().append("g")
-            .attr("class","arc")
-            .attr("d", arc)
-            .on("mousemove",function(d){
-              var mouseVal = d3.mouse(this);
-              div.style("display","none");
-              div.html("<div class='explanation'>"+d.data.id+"</br>"+ "score: " + d.data.score+"</br>"+"weight: "+((1/data.length)*100).toFixed(1)+"%</div>")
-                      .style("left", (d3.event.pageX+12) + "px")
-                      .style("top", (d3.event.pageY-10) + "px")
-                      .style("opacity", 1)
-                      .style("font-family", 'Lato')
-                      .style('font-size', "20px")
-                      .style("display","block");
-            })
-            .on("mouseout",function(){div.html(" ").style("display","none");});
-
-
-
-    g.append("path")
-            .style("fill","transparent")
-            .attr("d", arc)
-
-            .transition().delay(function(d,i) {return i * 400;}).duration(400)
-
-            .attrTween('d', function(d) {
-              var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-              return function(t) {
-                d.endAngle = i(t);
-                return arc(d);
-              }})
-            .attr("d",arc)
-            .style("fill",function(d){return d.data.c;});
 
   }
 
